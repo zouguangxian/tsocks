@@ -853,6 +853,9 @@ static int connect_server(struct connreq *conn) {
                     sizeof(conn->serveraddr));
 
    show_msg(MSGDEBUG, "Connect returned %d, errno is %d\n", rc, errno); 
+   if (rc && errno == EISCONN) {
+      rc = 0;
+   }
 	if (rc) {
       if (errno != EINPROGRESS) {
          show_msg(MSGERR, "Error %d attempting to connect to SOCKS "
