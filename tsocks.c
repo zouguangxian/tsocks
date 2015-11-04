@@ -99,6 +99,7 @@ static int read_socksv5_method(struct connreq *conn);
 static int read_socksv4_req(struct connreq *conn);
 static int read_socksv5_connect(struct connreq *conn);
 static int read_socksv5_auth(struct connreq *conn);
+void _init(void) __attribute__ ((constructor));
 
 void _init(void) {
 #ifdef USE_OLD_DLSYM
