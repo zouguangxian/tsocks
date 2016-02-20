@@ -7,6 +7,7 @@ I made some modification based on http://marc-abramowitz.com/archives/2006/01/29
 
 ## Install
     $ git clone  https://github.com/zouguangxian/tsocks.git
+    $ autoconf -f
     $ ./configure --prefix=/opt --libdir=/opt/lib --with-conf=/opt/etc/tsocks.conf --enable-debug
     $ make
     $ make install
