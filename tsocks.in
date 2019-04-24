@@ -42,43 +42,43 @@ if [ $# = 0 ] ; then
    exit
 fi
 
-LIBDIR="/usr/local/lib"
+LIBDIR="@libdir@"
 LIB_NAME="libtsocks"
-SHLIB_EXT="dylib"
+SHLIB_EXT="@SHLIB_EXT@"
 SHLIB="${LIBDIR}/${LIB_NAME}.${SHLIB_EXT}"
 
 case "$1" in
         on)
-                if [ -z "$DYLD_INSERT_LIBRARIES" ]
+                if [ -z "$@LD_PRELOAD@" ]
                         then
-                                export DYLD_INSERT_LIBRARIES="${SHLIB}"
+                                export @LD_PRELOAD@="${SHLIB}"
                         else
-                                echo $DYLD_INSERT_LIBRARIES | grep -q "${SHLIB}" || \
-                                export DYLD_INSERT_LIBRARIES="${SHLIB} $DYLD_INSERT_LIBRARIES"
+                                echo $@LD_PRELOAD@ | grep -q "${SHLIB}" || \
+                                export @LD_PRELOAD@="${SHLIB} $@LD_PRELOAD@"
                 fi
                 [ `uname` = "Darwin" ] && export DYLD_FORCE_FLAT_NAMESPACE=1
         ;;
         off)
-                export DYLD_INSERT_LIBRARIES=`echo -n $DYLD_INSERT_LIBRARIES | sed 's#/usr/local/lib/libtsocks\.dylib *##'`
-                if [ -z "$DYLD_INSERT_LIBRARIES" ]
+                export @LD_PRELOAD@=`echo -n $@LD_PRELOAD@ | sed 's#@libdir@/libtsocks\.@SHLIB_EXT@ *##'`
+                if [ -z "$@LD_PRELOAD@" ]
                         then
-                                unset DYLD_INSERT_LIBRARIES
+                                unset @LD_PRELOAD@
                 fi
         ;;
         show|sh)
-                echo "DYLD_INSERT_LIBRARIES=\"$DYLD_INSERT_LIBRARIES\""
+                echo "@LD_PRELOAD@=\"$@LD_PRELOAD@\""
                 [ `uname` = "Darwin" ] && echo "DYLD_FORCE_FLAT_NAMESPACE=\"$DYLD_FORCE_FLAT_NAMESPACE\""
         ;;
         -h|-?)
       echo "$0: Please see tsocks(1) or read comment at top of $0"
    ;;
         *)
-                if [ -z "$DYLD_INSERT_LIBRARIES" ]
+                if [ -z "$@LD_PRELOAD@" ]
                 then
-                        export DYLD_INSERT_LIBRARIES="${SHLIB}"
+                        export @LD_PRELOAD@="${SHLIB}"
                 else
-                        echo $DYLD_INSERT_LIBRARIES | grep -q "${SHLIB}" || \
-                        export DYLD_INSERT_LIBRARIES="${SHLIB} $DYLD_INSERT_LIBRARIES"
+                        echo $@LD_PRELOAD@ | grep -q "${SHLIB}" || \
+                        export @LD_PRELOAD@="${SHLIB} $@LD_PRELOAD@"
                 fi
 
                 [ `uname` = "Darwin" ] && export DYLD_FORCE_FLAT_NAMESPACE=1
