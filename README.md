@@ -23,3 +23,26 @@ Porting to macOS by Zou Guangxian <zouguangxian@163.com> based on http://marc-ab
 
     $ TSOCKS_DEBUG=2 tsocks git pull
 
+or
+```
+    $ source /usr/local/bin/tsocks on 
+    $ telnet example.org
+```
+or
+```
+    $ . /usr/local/bin/tsocks on 
+    $ telnet example.org
+```
+
+## Notes for macOS
+
+* Install OpenSSH from sources (or use Homebrew https://brew.sh) as the default ssh will not work with the preloaded library:
+```
+    brew install openssh
+```
+
+*  To permanently sockify all connections using preloaded library, set essential environmental variables on login:
+```
+    launchctl setenv DYLD_FORCE_FLAT_NAMESPACE 1
+    launchctl setenv DYLD_INSERT_LIBRARIES /usr/local/lib/libtsocks.dylib
+```
