@@ -26,12 +26,12 @@ Porting to macOS by Zou Guangxian <zouguangxian@163.com> based on http://marc-ab
 or
 ```
     $ source /usr/local/bin/tsocks on 
-    telnet example.org
+    $ telnet example.org
 ```
 or
 ```
     $ . /usr/local/bin/tsocks on 
-    telnet example.org
+    $ telnet example.org
 ```
 
 ## Notes for macOS
