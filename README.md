@@ -8,6 +8,7 @@ Porting to macOS by Zou Guangxian <zouguangxian@163.com> based on http://marc-ab
 ## Install
 ```
     $ git clone https://github.com/mezantrop/tsocks.git
+    $ cd tsocks
     $ autoconf -f
     $ ./configure --prefix=/usr/local --libdir=/usr/local/lib --with-conf=/usr/local/etc/tsocks.conf --enable-debug
     $ make
