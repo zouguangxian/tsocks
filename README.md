@@ -41,7 +41,7 @@ or
     brew install openssh
 ```
 
-*  To sockify all connections using preloaded library, set essential environmental variables on login:
+*  To permanently sockify all connections using preloaded library, set essential environmental variables on login:
 ```
     launchctl setenv DYLD_FORCE_FLAT_NAMESPACE 1
     launchctl setenv DYLD_INSERT_LIBRARIES /usr/local/lib/libtsocks.dylib
