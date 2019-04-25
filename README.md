@@ -38,7 +38,7 @@ or
 
 ## Notes for macOS
 
-* Install OpenSSH from sources (or use Homebrew https://brew.sh) as the default ssh will not work with the preloaded library:
+* Install OpenSSH from sources (or use Homebrew https://brew.sh port) as the default ssh will not work with the preloaded library:
 ```
     brew install openssh
 ```
