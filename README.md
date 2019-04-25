@@ -3,7 +3,7 @@ tsocks, a transparent SOCKS proxying library.
 
 This project is originally hosted by sourceforge http://tsocks.sourceforge.net
 
-Modifications by Zou Guangxian <zouguangxian@163.com> based on http://marc-abramowitz.com/archives/2006/01/29/building-tsocks-on-mac-os-x/ so that it can work on Mac OS with minor fixes by Mikhail Zakharov <zmey20000@yahoo.com> for macOS.
+Porting to macOS by Zou Guangxian <zouguangxian@163.com> based on http://marc-abramowitz.com/archives/2006/01/29/building-tsocks-on-mac-os-x, with minor fixes by Mikhail Zakharov <zmey20000@yahoo.com> for macOS.
 
 ## Install
     $ git clone https://github.com/mezantrop/tsocks.git
