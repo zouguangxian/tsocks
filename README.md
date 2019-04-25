@@ -1,5 +1,5 @@
 # tsocks
-tsocks, a transparent SOCKS proxying library.
+## a transparent SOCKS proxying library
 
 This project is originally hosted by sourceforge http://tsocks.sourceforge.net
 
