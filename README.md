@@ -3,7 +3,7 @@
 
 This project is originally hosted by sourceforge http://tsocks.sourceforge.net
 
-Porting to macOS by Zou Guangxian <zouguangxian@163.com> based on http://marc-abramowitz.com/archives/2006/01/29/building-tsocks-on-mac-os-x, with minor fixes by Mikhail Zakharov <zmey20000@yahoo.com> for macOS.
+Porting to macOS by Zou Guangxian <zouguangxian@163.com> based on http://marc-abramowitz.com/archives/2006/01/29/building-tsocks-on-mac-os-x, with fixes by Mikhail Zakharov <zmey20000@yahoo.com>
 
 ## Install
 ```
