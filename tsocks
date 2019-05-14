@@ -5,36 +5,36 @@
 #
 # /usr/bin/tsocks program [program arguments...]
 #
-# This form sets the users LD_PRELOAD environment variable so that tsocks(8) 
-# will be loaded to socksify the application then executes the specified 
-# program (with the provided arguments). The following simple example might 
+# This form sets the users LD_PRELOAD environment variable so that tsocks(8)
+# will be loaded to socksify the application then executes the specified
+# program (with the provided arguments). The following simple example might
 # be used to telnet to www.foo.org via a tsocks.conf(5) configured socks server:
 #
 # /usr/bin/tsocks telnet www.foo.org
 #
-# The second form allows for tsocks(8) to be switched on and off for a 
+# The second form allows for tsocks(8) to be switched on and off for a
 # session (that is, it adds and removes tsocks from the LD_PRELOAD environment
 # variable). This form must be _sourced_ into the user's existing session
 # (and will only work with bourne shell users):
 #
 # . /usr/bin/tsocks on
-# telnet www.foo.org 
+# telnet www.foo.org
 # . /usr/bin/tsocks off
-# 
+#
 # Or
-# 
+#
 # source /usr/bin/tsocks on
 # telnet www.foo.org
 # source /usr/bin/tsocks off
 #
 # The third form creates a new shell with LD_PRELOAD set and is achieved
-# simply by running the script with no arguments 
-# 
+# simply by running the script with no arguments
+#
 # /usr/bin/tsocks
 #
 # When finished the user can simply terminate the shell with 'exit'
-# 
-# This script is originally from the debian tsocks package by 
+#
+# This script is originally from the debian tsocks package by
 # Tamas Szerb <toma@rulez.org>
 
 if [ $# = 0 ] ; then
@@ -42,48 +42,57 @@ if [ $# = 0 ] ; then
    exit
 fi
 
+LIBDIR="/usr/local/lib"
+LIB_NAME="libtsocks"
+SHLIB_EXT="dylib"
+SHLIB="${LIBDIR}/${LIB_NAME}.${SHLIB_EXT}"
+
 case "$1" in
-	on)
-		if [ -z "$LD_PRELOAD" ]
-			then
-				export LD_PRELOAD="/usr/lib/libtsocks.so"
-			else
-				echo $LD_PRELOAD | grep -q "/usr/lib/libtsocks\.so" || \
-				export LD_PRELOAD="/usr/lib/libtsocks.so $LD_PRELOAD"
-		fi
-	;;
-	off)
-		export LD_PRELOAD=`echo -n $LD_PRELOAD | sed 's/\/usr\/lib\/libtsocks.so \?//'`
-		if [ -z "$LD_PRELOAD" ]
-			then
-				unset LD_PRELOAD
-		fi
-	;;
-	show|sh)
-		echo "LD_PRELOAD=\"$LD_PRELOAD\""
-	;;
-	-h|-?)
+        on)
+                if [ -z "$DYLD_INSERT_LIBRARIES" ]
+                        then
+                                export DYLD_INSERT_LIBRARIES="${SHLIB}"
+                        else
+                                echo $DYLD_INSERT_LIBRARIES | grep -q "${SHLIB}" || \
+                                export DYLD_INSERT_LIBRARIES="${SHLIB} $DYLD_INSERT_LIBRARIES"
+                fi
+                [ `uname` = "Darwin" ] && export DYLD_FORCE_FLAT_NAMESPACE=1
+        ;;
+        off)
+                export DYLD_INSERT_LIBRARIES=`echo -n $DYLD_INSERT_LIBRARIES | sed 's#/usr/local/lib/libtsocks\.dylib *##'`
+                if [ -z "$DYLD_INSERT_LIBRARIES" ]
+                        then
+                                unset DYLD_INSERT_LIBRARIES
+                fi
+        ;;
+        show|sh)
+                echo "DYLD_INSERT_LIBRARIES=\"$DYLD_INSERT_LIBRARIES\""
+                [ `uname` = "Darwin" ] && echo "DYLD_FORCE_FLAT_NAMESPACE=\"$DYLD_FORCE_FLAT_NAMESPACE\""
+        ;;
+        -h|-?)
       echo "$0: Please see tsocks(1) or read comment at top of $0"
    ;;
-	*)
-		if [ -z "$LD_PRELOAD" ]
-		then
-			export LD_PRELOAD="/usr/lib/libtsocks.so"
-		else
-			echo $LD_PRELOAD | grep -q "/usr/lib/libtsocks\.so" || \
-			export LD_PRELOAD="/usr/lib/libtsocks.so $LD_PRELOAD"
-		fi
+        *)
+                if [ -z "$DYLD_INSERT_LIBRARIES" ]
+                then
+                        export DYLD_INSERT_LIBRARIES="${SHLIB}"
+                else
+                        echo $DYLD_INSERT_LIBRARIES | grep -q "${SHLIB}" || \
+                        export DYLD_INSERT_LIBRARIES="${SHLIB} $DYLD_INSERT_LIBRARIES"
+                fi
 
-		if [ $# = 0 ]
-		then
-			${SHELL:-/bin/sh}
-		fi
+                [ `uname` = "Darwin" ] && export DYLD_FORCE_FLAT_NAMESPACE=1
 
-		if [ $# -gt 0 ]
-		then
-			exec "$@"
-		fi
-	;;
+                if [ $# = 0 ]
+                then
+                        ${SHELL:-/bin/sh}
+                fi
+
+                if [ $# -gt 0 ]
+                then
+                        exec "$@"
+                fi
+        ;;
 esac
 
 #EOF

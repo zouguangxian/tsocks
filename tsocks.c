@@ -192,12 +192,13 @@ int connect(CONNECT_SIGNATURE) {
 	struct sockaddr_in *connaddr;
 	struct sockaddr_in peer_address;
 	struct sockaddr_in server_address;
-   int gotvalidserver = 0, rc, namelen = sizeof(peer_address);
+  int gotvalidserver = 0, rc;
+  socklen_t namelen = sizeof(peer_address);
 	int sock_type = -1;
-	int sock_type_len = sizeof(sock_type);
+	socklen_t sock_type_len = sizeof(sock_type);
 	unsigned int res = -1;
 	struct serverent *path;
-   struct connreq *newconn;
+  struct connreq *newconn;
 
    get_environment();
 

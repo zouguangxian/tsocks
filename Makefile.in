@@ -22,6 +22,7 @@ COMMON = common
 PARSER = parser
 VALIDATECONF = validateconf
 SCRIPT = tsocks
+NAME_PREFIX = tsocks
 SHLIB_MAJOR = 1
 SHLIB_MINOR = 8
 SHLIB = ${LIB_NAME}.${SHLIB_EXT}.${SHLIB_MAJOR}.${SHLIB_MINOR}
@@ -38,18 +39,18 @@ SHOBJS = ${OBJS:.o=.so}
 
 OBJS= tsocks.o
 
-TARGETS= ${SHLIB} ${UTIL_LIB} ${SAVE} ${INSPECT} ${VALIDATECONF}
+TARGETS= ${SHLIB} ${SAVE} ${INSPECT} ${VALIDATECONF}
 
 all: ${TARGETS}
 
 ${VALIDATECONF}: ${VALIDATECONF}.c ${COMMON}.o ${PARSER}.o
-	${SHCC} ${CFLAGS} ${INCLUDES} -o ${VALIDATECONF} ${VALIDATECONF}.c ${COMMON}.o ${PARSER}.o ${LIBS}
+	${SHCC} ${CFLAGS} ${INCLUDES} -o ${NAME_PREFIX}-${VALIDATECONF} ${VALIDATECONF}.c ${COMMON}.o ${PARSER}.o ${LIBS}
 
 ${INSPECT}: ${INSPECT}.c ${COMMON}.o
-	${SHCC} ${CFLAGS} ${INCLUDES} -o ${INSPECT} ${INSPECT}.c ${COMMON}.o ${LIBS} 
+	${SHCC} ${CFLAGS} ${INCLUDES} -o ${NAME_PREFIX}-${INSPECT} ${INSPECT}.c ${COMMON}.o ${LIBS} 
 
 ${SAVE}: ${SAVE}.c
-	${SHCC} ${CFLAGS} ${INCLUDES} -o ${SAVE} ${SAVE}.c
+	${SHCC} ${CFLAGS} ${INCLUDES} -o ${NAME_PREFIX}-${SAVE} ${SAVE}.c
 
 ${SHLIB}: ${OBJS} ${COMMON}.o ${PARSER}.o
 	${SHCC} ${CFLAGS} ${INCLUDES} -nostdlib ${LDFLAGS} -o ${SHLIB} ${OBJS} ${COMMON}.o ${PARSER}.o ${DYNLIB_FLAGS} ${SPECIALLIBS} ${LIBS}
@@ -61,7 +62,7 @@ ${SHLIB}: ${OBJS} ${COMMON}.o ${PARSER}.o
 %.o: %.c
 	${SHCC} ${CFLAGS} ${INCLUDES} -c ${CC_SWITCHES} $< -o $@
 
-install: ${TARGETS} installscript installlib installman
+install: ${TARGETS} installscript installlib installman installtools
 
 installscript:
 	${MKINSTALLDIRS} "${DESTDIR}${bindir}"
@@ -81,8 +82,15 @@ installman:
 	${MKINSTALLDIRS} "${DESTDIR}${mandir}/man5"
 	${INSTALL_DATA} tsocks.conf.5 ${DESTDIR}${mandir}/man5/
 	
+installtools:
+	${MKINSTALLDIRS} "${DESTDIR}${bindir}"
+	${INSTALL} ${NAME_PREFIX}-${INSPECT} ${DESTDIR}${bindir}
+	${INSTALL} ${NAME_PREFIX}-${SAVE} ${DESTDIR}${bindir}
+	${INSTALL} ${NAME_PREFIX}-${VALIDATECONF} ${DESTDIR}${bindir}
+
 clean:
-	-rm -f *.so *.so.* *.${SHLIB_EXT} *.${SHLIB_EXT}.* *.o *~ ${TARGETS}
+	-rm -f *.so *.so.* *.${SHLIB_EXT} *.${SHLIB_EXT}.* *.o *~ ${SHLIB} 
+	-rm -f ${NAME_PREFIX}-${SAVE} ${NAME_PREFIX}-${INSPECT} ${NAME_PREFIX}-${VALIDATECONF}
 
 distclean: clean
-	-rm -f config.cache config.log config.h Makefile
+	-rm -f configure config.status config.cache config.log config.h Makefile

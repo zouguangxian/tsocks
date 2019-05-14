@@ -131,26 +131,26 @@ tsocks comes with two utilities that can be useful in creating and verifying
 the tsocks configuration file. 
 
 .TP
-inspectsocks
-inspectsocks can be used to determine the SOCKS version that a server supports.
-Inspectsocks takes as its arguments the ip address/hostname of the SOCKS
-server and optionally the port number for socks (e.g 'inspectsocks 
+tsocks-inspectsocks
+tsocks-inspectsocks can be used to determine the SOCKS version that a server
+supports. Inspectsocks takes as its arguments the ip address/hostname of the
+SOCKS server and optionally the port number for socks (e.g 'tsocks-inspectsocks 
 socks.nec.com 1080'). It then inspects that server to attempt to determine 
 the version that server supports. 
 
 .TP
-validateconf
-validateconf can be used to verify the configuration file. It checks the format
-of the file and also the contents for errors. Having read the file it dumps 
-the configuration to the screen in a formatted, readable manner. This can be 
-extremely useful in debugging problems.
+tsocks-validateconf
+tsocks-validateconf can be used to verify the configuration file. It checks 
+the format of the file and also the contents for errors. Having read the file
+it dumps the configuration to the screen in a formatted, readable manner. This
+can be extremely useful in debugging problems.
 
-validateconf can read a configuration file from a location other than the 
-location specified at compile time with the -f <filename> command line 
+tsocks-validateconf can read a configuration file from a location other than
+the location specified at compile time with the -f <filename> command line 
 option.
 
-Normally validateconf simply dumps the configuration read to the screen (in
-a nicely readable format), however it also has a useful 'test' mode. When
+Normally tsocks-validateconf simply dumps the configuration read to the screen
+(in a nicely readable format), however it also has a useful 'test' mode. When
 passed a hostname/ip on the command line like -t <hostname/ip>, validateconf 
 determines which of the SOCKS servers specified in the configuration file 
 would be used by tsocks to access the specified host. 
