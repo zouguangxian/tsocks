@@ -40,8 +40,9 @@ or
 ## Notes for macOS
 ### If SSH client does not work
 Preloaded libraries do not work, when a user, that starts a program is not the same as the owner of the executable. Luckily, there is a number or ways to handle this issue. For example, use sudo:
-
+```
 $ sudo DYLD_FORCE_FLAT_NAMESPACE=1 DYLD_INSERT_LIBRARIES=/usr/local/lib/libtsocks.dylib ssh username@xx.xx.xx.xx
+```
 Or, from the technical point of view, nothing can prevent you, from installing ssh client using Homebrew https://brew.sh port:
 
 ```
