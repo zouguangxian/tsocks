@@ -38,14 +38,25 @@ or
 ```
 
 ## Notes for macOS
+### If SSH client does not work...
+Preloaded libraries do not work, when a user that starts a program is not the same as the owner of the executable. Luckily, there is a number or ways to handle this issue. For example, use sudo:
 
-* Install OpenSSH from sources (or use Homebrew https://brew.sh port) as the default ssh will not work with the preloaded library:
+$ sudo DYLD_FORCE_FLAT_NAMESPACE=1 DYLD_INSERT_LIBRARIES=/usr/local/lib/libtsocks.dylib ssh username@xx.xx.xx.xx
+Or, from the technical point of view, nothing can prevent you, from installing ssh client using Homebrew https://brew.sh port:
+
 ```
     brew install openssh
 ```
+or building it manually from sources - your user will own ssh binaries.
 
-*  To permanently sockify all connections using preloaded library, set essential environmental variables on login:
+### To permanently "socksify" all connections using preloaded library
+Set essential environmental variables on login:
 ```
     launchctl setenv DYLD_FORCE_FLAT_NAMESPACE 1
     launchctl setenv DYLD_INSERT_LIBRARIES /usr/local/lib/libtsocks.dylib
+```
+Or if the method above doesn't help, add them to your ~/.bash_profile:
+```
+    export DYLD_FORCE_FLAT_NAMESPACE=1
+    export DYLD_INSERT_LIBRARIES=/usr/local/lib/libtsocks.dylib
 ```
