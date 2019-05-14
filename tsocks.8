@@ -19,7 +19,20 @@ export LD_PRELOAD=/lib/libtsocks.so
 
 C Shell - 
 
-setenv LD_PRELOAD=/lib/libtsocks.so
+setenv LD_PRELOAD /lib/libtsocks.so
+
+On macOS instead of LD_PRELOAD, set DYLD_FORCE_FLAT_NAMESPACE and 
+DYLD_INSERT_LIBRARIES variables:
+
+Bash, Ksh and Bourne shell -
+
+export DYLD_FORCE_FLAT_NAMESPACE=1
+export DYLD_INSERT_LIBRARIES=/lib/libtsocks.dylib
+
+C Shell - 
+
+setenv DYLD_FORCE_FLAT_NAMESPACE 1
+setenv DYLD_INSERT_LIBRARIES /lib/libtsocks.dylib
 
 This process can be automated (for Bash, Bourne and Korn shell 
 users) for a single command or for all commands in a shell session
@@ -127,8 +140,8 @@ force all applications to LD_PRELOAD the library by placing the path to
 libtsocks in /etc/ld.so.preload. Please make sure you correctly enter the
 full path to the library in this file if you do this. If you get it wrong,
 you will be UNABLE TO DO ANYTHING with the machine and will have to boot
-it with a rescue disk and remove the file (or try the saveme program, see
-the INSTALL file for more info).  THIS IS A ***WARNING***, please be
+it with a rescue disk and remove the file (or try the tsocks-saveme program,
+see the INSTALL file for more info).  THIS IS A ***WARNING***, please be
 careful. Also be sure the library is in the root filesystem as all hell
 will break loose if the directory it is in is not available at boot time.
 
@@ -169,7 +182,8 @@ tsocks.conf(5)
 tsocks(1)
 
 .SH AUTHOR
-Shaun Clowes (delius@progsoc.uts.edu.au)
+Shaun Clowes (delius@progsoc.uts.edu.au), macOS port: 
+Zou Guangxian <zouguangxian@163.com> and Mikhail Zakharov <zmey20000@yahoo.com>
 
 .SH COPYRIGHT
 Copyright 2000 Shaun Clowes

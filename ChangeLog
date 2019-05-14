@@ -1,3 +1,14 @@
+version ?.?+2 - 2019.04.25 zmey20000@yahoo.com
+	Makefile updated: inspect, saveme and validateconf utilities are installed
+	with "tsocks-" prefix. Documentation, manpages updated. INSTALL renamed to 
+	INSTALL.historical.
+
+version ?.?+1 - 2019.04.25 zmey20000@yahoo.com
+	readme, manpage updates
+
+version ?.? - 2019.04.24 zmey20000@yahoo.com
+	Minor fix to run on macOS
+
 version 1.80Beta5 - 2002.?.?? delius@progsoc.uts.edu.au
    Intercept close() to fix problems with tsocks and 
       kmail 

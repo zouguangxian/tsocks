@@ -336,7 +336,7 @@ dnl Check if the linker accepts -dynamiclib; necessary on Mac OS X
 AC_MSG_CHECKING(if the linker accepts -dynamiclib)
 OLDLDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS -dynamiclib"
-AC_TRY_COMPILE(,,AC_MSG_RESULT(yes),[
+AC_TRY_LINK(,,AC_MSG_RESULT(yes),[
   LDFLAGS="$OLDLDFLAGS"
   AC_MSG_RESULT(no)])
 
@@ -344,7 +344,7 @@ dnl Check if the linker accepts -multiply_defined suppress; necessary on Mac OS 
 AC_MSG_CHECKING(if the linker accepts -multiply_defined suppress)
 OLDLDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS -multiply_defined suppress"
-AC_TRY_COMPILE(,,AC_MSG_RESULT(yes),[
+AC_TRY_LINK(,,AC_MSG_RESULT(yes),[
   LDFLAGS="$OLDLDFLAGS"
   AC_MSG_RESULT(no)])
 
@@ -354,7 +354,7 @@ OLDLDFLAGS="$LDFLAGS"
 SHLIB_EXT="so"
 LD_PRELOAD="LD_PRELOAD"
 LDFLAGS="$LDFLAGS -single_module"
-AC_TRY_COMPILE(,,
+AC_TRY_LINK(,,
   [
      SHLIB_EXT="dylib" 
      LD_PRELOAD="DYLD_INSERT_LIBRARIES"
