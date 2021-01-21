@@ -684,12 +684,8 @@ int close(CLOSE_SIGNATURE) {
    int rc;
    struct connreq *conn;
 
-	if (realclose == NULL) {
-		show_msg(MSGERR, "Unresolved symbol: close\n");
-		return(-1);
-	}
-
-   show_msg(MSGDEBUG, "Call to close(%d)\n", fd);
+	if (realclose == NULL)
+      realclose = dlsym(RTLD_NEXT, "close");
 
    rc = realclose(fd);
 
