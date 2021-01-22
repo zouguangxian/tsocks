@@ -684,9 +684,17 @@ int close(CLOSE_SIGNATURE) {
    int rc;
    struct connreq *conn;
 
-	if (realclose == NULL)
-      realclose = dlsym(RTLD_NEXT, "close");
+	if (realclose == NULL) {
+      #ifndef USE_OLD_DLSYM
+         realclose = dlsym(RTLD_NEXT, "close");
+      #else
+         void *lib;
 
+         lib = dlopen(LIBC, RTLD_LAZY);
+         realclose = dlsym(lib, "close");
+         dlclose(lib);
+      #endif
+   }
    rc = realclose(fd);
 
    /* If we have this fd in our request handling list we 
