@@ -2,6 +2,8 @@
 
 CC=@CC@
 SHLIB_EXT=@SHLIB_EXT@
+srcdir=@srcdir@
+VPATH=@srcdir@
 prefix=@prefix@
 exec_prefix = @exec_prefix@
 libexecdir = @libexecdir@
@@ -13,7 +15,7 @@ mandir = @mandir@
 includedir = @includedir@
 
 SHELL = /bin/sh
-MKINSTALLDIRS = ${SHELL} mkinstalldirs 
+MKINSTALLDIRS = ${SHELL} ${srcdir}/mkinstalldirs 
 SHCC = ${CC} -fPIC 
 INSPECT = inspectsocks
 SAVE = saveme
@@ -31,7 +33,7 @@ INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 CFLAGS = @CFLAGS@
 LDFLAGS = @LDFLAGS@
-INCLUDES = -I.
+INCLUDES = -I. -I${srcdir}
 LIBS = @LIBS@
 SPECIALLIBS = @SPECIALLIBS@
 
@@ -43,23 +45,23 @@ TARGETS= ${SHLIB} ${SAVE} ${INSPECT} ${VALIDATECONF}
 
 all: ${TARGETS}
 
-${VALIDATECONF}: ${VALIDATECONF}.c ${COMMON}.o ${PARSER}.o
-	${SHCC} ${CFLAGS} ${INCLUDES} -o ${NAME_PREFIX}-${VALIDATECONF} ${VALIDATECONF}.c ${COMMON}.o ${PARSER}.o ${LIBS}
+${VALIDATECONF}: ${srcdir}/${VALIDATECONF}.c ${COMMON}.o ${PARSER}.o
+	${SHCC} ${CFLAGS} ${INCLUDES} -o ${NAME_PREFIX}-${VALIDATECONF} ${srcdir}/${VALIDATECONF}.c ${COMMON}.o ${PARSER}.o ${LIBS}
 
-${INSPECT}: ${INSPECT}.c ${COMMON}.o
-	${SHCC} ${CFLAGS} ${INCLUDES} -o ${NAME_PREFIX}-${INSPECT} ${INSPECT}.c ${COMMON}.o ${LIBS} 
+${INSPECT}: ${srcdir}/${INSPECT}.c ${COMMON}.o
+	${SHCC} ${CFLAGS} ${INCLUDES} -o ${NAME_PREFIX}-${INSPECT} ${srcdir}/${INSPECT}.c ${COMMON}.o ${LIBS} 
 
-${SAVE}: ${SAVE}.c
-	${SHCC} ${CFLAGS} ${INCLUDES} -o ${NAME_PREFIX}-${SAVE} ${SAVE}.c
+${SAVE}: ${srcdir}/${SAVE}.c
+	${SHCC} ${CFLAGS} ${INCLUDES} -o ${NAME_PREFIX}-${SAVE} ${srcdir}/${SAVE}.c
 
 ${SHLIB}: ${OBJS} ${COMMON}.o ${PARSER}.o
 	${SHCC} ${CFLAGS} ${INCLUDES} -nostdlib ${LDFLAGS} -o ${SHLIB} ${OBJS} ${COMMON}.o ${PARSER}.o ${DYNLIB_FLAGS} ${SPECIALLIBS} ${LIBS}
 	ln -sf ${SHLIB} ${LIB_NAME}.${SHLIB_EXT}
 
-%.so: %.c
+%.so: ${srcdir}/%.c
 	${SHCC} ${CFLAGS} ${INCLUDES} -c ${CC_SWITCHES} $< -o $@
 
-%.o: %.c
+%.o: ${srcdir}/%.c
 	${SHCC} ${CFLAGS} ${INCLUDES} -c ${CC_SWITCHES} $< -o $@
 
 install: ${TARGETS} installscript installlib installman installtools
@@ -76,11 +78,11 @@ installlib:
 
 installman:
 	${MKINSTALLDIRS} "${DESTDIR}${mandir}/man1"
-	${INSTALL_DATA} tsocks.1 ${DESTDIR}${mandir}/man1/
+	${INSTALL_DATA} ${srcdir}/tsocks.1 ${DESTDIR}${mandir}/man1/
 	${MKINSTALLDIRS} "${DESTDIR}${mandir}/man8"
-	${INSTALL_DATA} tsocks.8 ${DESTDIR}${mandir}/man8/
+	${INSTALL_DATA} ${srcdir}/tsocks.8 ${DESTDIR}${mandir}/man8/
 	${MKINSTALLDIRS} "${DESTDIR}${mandir}/man5"
-	${INSTALL_DATA} tsocks.conf.5 ${DESTDIR}${mandir}/man5/
+	${INSTALL_DATA} ${srcdir}/tsocks.conf.5 ${DESTDIR}${mandir}/man5/
 	
 installtools:
 	${MKINSTALLDIRS} "${DESTDIR}${bindir}"

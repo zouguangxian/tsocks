@@ -1,7 +1,5 @@
-/* config.h.in.  Generated automatically from configure.in by autoheader.  */
-
-/* Define if you have the ANSI C header files.  */
-#undef STDC_HEADERS
+/* config.h.in.  Generated from configure.ac by autoheader.  */
+/* accconfig.h -- `autoheader' will generate config.h.in for tsocks . */
 
 /* Allow tsocks to generate messages to stderr when errors are
 encountered, this is really important and should only be disabled if
@@ -51,6 +49,11 @@ numerical ones */
 #undef HAVE_INET_ADDR
 #undef HAVE_INET_ATON
 
+/* We use strsep which isn't on all machines, but we provide our own
+definition of it for those which don't have it, this causes us to define
+our version */
+#undef DEFINE_STRSEP
+
 /* Allow the use of DNS names in the socks configuration file for socks
 servers. This doesn't work if socksified DNS is enabled for obvious
 reasons, it also introduces overhead, but people seem to want it */
@@ -63,26 +66,73 @@ in inspectsocks */
 /* Location of configuration file (typically /etc/tsocks.conf) */
 #undef CONF_FILE 
 
-/* Define if you have the strcspn function.  */
-#undef HAVE_STRCSPN
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
 
-/* Define if you have the strdup function.  */
-#undef HAVE_STRDUP
-
-/* Define if you have the strerror function.  */
-#undef HAVE_STRERROR
-
-/* Define if you have the strspn function.  */
-#undef HAVE_STRSPN
-
-/* Define if you have the strtol function.  */
-#undef HAVE_STRTOL
-
-/* Define if you have the <unistd.h> header file.  */
-#undef HAVE_UNISTD_H
-
-/* Define if you have the dl library (-ldl).  */
+/* Define to 1 if you have the 'dl' library (-ldl). */
 #undef HAVE_LIBDL
 
-/* Define if you have the socket library (-lsocket).  */
+/* Define to 1 if you have the 'socket' library (-lsocket). */
 #undef HAVE_LIBSOCKET
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#undef HAVE_STDIO_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the 'strcspn' function. */
+#undef HAVE_STRCSPN
+
+/* Define to 1 if you have the 'strdup' function. */
+#undef HAVE_STRDUP
+
+/* Define to 1 if you have the 'strerror' function. */
+#undef HAVE_STRERROR
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the 'strspn' function. */
+#undef HAVE_STRSPN
+
+/* Define to 1 if you have the 'strtol' function. */
+#undef HAVE_STRTOL
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to 1 if all of the C89 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
+#undef STDC_HEADERS

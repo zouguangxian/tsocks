@@ -1,0 +1,24 @@
+# Out-of-tree builds
+build/
+
+# Autoconf / configure outputs
+autom4te.cache/
+config.log
+config.status
+config.cache
+config.h
+Makefile
+
+# Compilation outputs
+*.o
+*.so
+*.so.*
+*.dylib
+*.dylib.*
+*.a
+
+# Editor backup files
+*~
+
+# Generated configure script
+configure
